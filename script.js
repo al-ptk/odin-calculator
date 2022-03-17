@@ -68,6 +68,36 @@ function applyStyles(parent, stylesheet) {
     }
 }
 
-const calc = document.querySelector('.calculator');
-bindButtonsToArea(calc);
-applyStyles(calc, stylesheet1);
+function createToggleStyleButton (parent) {
+    const btn = document.createElement('button')
+    btn.classList.add('toggle');
+    btn.style.borderRadius = '50%';
+    btn.style.background = 'yellow';
+    btn.style.height = '50px';
+    btn.style.width = '50px';
+    btn.style.position = 'absolute';
+    btn.style.top = '1rem';
+    btn.style.left = "1rem";
+    btn.addEventListener('click', (e) => cycleStyles([
+        stylesheet1,
+        stylesheet2
+    ]));
+    parent.appendChild(btn);
+}
+
+function cycleStyles (stylesheets) {
+    styleToggle = !styleToggle;
+    applyStyles(calc, stylesheets[+styleToggle]);
+}
+
+function setUpCalc () {
+    const calc = document.querySelector('.calculator');
+    bindButtonsToArea(calc); 
+    applyStyles(calc, stylesheet1);
+    return calc;
+}
+
+var styleToggle = false;
+const body = document.querySelector('body');
+const toggleStyleBtn = createToggleStyleButton(body);
+const calc = setUpCalc();
