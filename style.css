@@ -12,11 +12,12 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     background-color: #2f2f2f;
 }
 
 .calculator {
+    margin-top: 20rem;
     width: 64rem;
     height: 48rem;
     background-color: gray;
