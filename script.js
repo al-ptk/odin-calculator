@@ -35,11 +35,11 @@ function applyStyles(calc) {
     for (const btn of btns){
         const btnProperties = pickStyleBy(btn.className);
         for (const styleProperty in btnProperties){
-            btn.style.setProperty(btnProperties, btnProperties[styleProperty]);
+            btn.style.setProperty(styleProperty, btnProperties[styleProperty]);
         }
     }
 }
 
 const calc = document.querySelector('.calculator');
 bindButtonsToArea(calc);
-configureButtonStyles(calc);
+applyStyles(calc);
