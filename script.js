@@ -97,7 +97,7 @@ function createToggleStyleButton (parent, calc) {
     parent.appendChild(btn);
 }
 
-function cycleStyles (stylesheets) {
+function cycleStyles (stylesheets, calc) {
     styleToggle = !styleToggle;
     applyStyles(calc, stylesheets[+styleToggle]);
 }
