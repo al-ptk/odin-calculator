@@ -80,7 +80,7 @@ function setUpCalc () {
     return calc;
 }
 
-function createToggleStyleButton (parent) {
+function createToggleStyleButton (parent, calc) {
     const btn = document.createElement('button')
     btn.classList.add('toggle');
     btn.style.borderRadius = '50%';
@@ -93,7 +93,7 @@ function createToggleStyleButton (parent) {
     btn.addEventListener('click', (e) => cycleStyles([
         stylesheet1,
         stylesheet2
-    ]));
+    ], calc));
     parent.appendChild(btn);
 }
 
@@ -169,7 +169,6 @@ function bindOperations (calc, opSet) {
                     displayResult()
                 }
             }
-            p(CalculatorBuffers);
         });
     });
 }
@@ -219,7 +218,6 @@ function bindNumbers (calc) {
     nums.forEach(elem => {
         elem.addEventListener('click', e => {
             takeNumber(elem.textContent);
-            p(CalculatorBuffers)
         })
     });
 }
@@ -233,7 +231,7 @@ const CalculatorBuffers = {
 }
 var styleToggle = false;
 const body = document.querySelector('body');
-const toggleStyleBtn = createToggleStyleButton(body);
 const Calculator = setUpCalc();
 const CalculatorDisplay = document.querySelector('.display');
 CalculatorDisplay.textContent = CalculatorBuffers.input;
+const toggleStyleBtn = createToggleStyleButton(body, Calculator);
