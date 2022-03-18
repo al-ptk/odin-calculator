@@ -121,7 +121,7 @@ function displayResult () {
 
 const Operations = {
     'equal' : (buffers) => {
-        displayResult()
+        /*bad coding righ here */
     },
     'add' : (buffers) => {
         buffers.output = +buffers.output + +buffers.input
@@ -157,13 +157,17 @@ function bindOperations (calc, opSet) {
                 setCurretOperation(elem.id)
                 pushInputToOutput();
                 clearInput();
-            } else if (){
-            
-            }else {
+            } else {
+                if (elem.id == 'equal') {
                     opSet[CalculatorBuffers.currentOp](CalculatorBuffers);
-                    pushOutputToInput();
                     setCurretOperation(elem.id)
+                    displayResult()
                     clearInput();
+                } else {
+                    opSet[CalculatorBuffers.currentOp](CalculatorBuffers);
+                    setCurretOperation(elem.id)
+                    displayResult()
+                }
             }
             p(CalculatorBuffers);
         });
@@ -186,7 +190,9 @@ const Functions = {
         display.textContent = buffers.input;
     },
     'backspace' : (buffers, display) => {
-        display.textContent = buffers.input.slice(0, buffers.input.length - 1);
+        buffers.input = buffers.input.slice(0, buffers.input.length - 1);
+        if (buffers.input == '') buffers.input = '0';
+        display.textContent = buffers.input;
     }
 }
 
