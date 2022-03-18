@@ -73,7 +73,8 @@ function applyStyles(parent, stylesheet) {
 function setUpCalc () {
     const calc = document.querySelector('.calculator');
     bindButtonsToGridArea(calc);
-    bindOperations(calc, Operations)
+    bindOperations(calc, Operations);
+    bindFunctions(calc, Functions);
     applyStyles(calc, stylesheet1);
     return calc;
 }
@@ -106,7 +107,9 @@ function displayResult () {
 }
 
 const Operations = {
-    'equal' : (buffers) => {displayResult()},
+    'equal' : (buffers) => {
+        displayResult()
+    },
     'add' : (buffers) => {
         buffers.output = +buffers.output + +buffers.input
         buffers.output = buffers.output.toString();
@@ -135,6 +138,34 @@ function bindOperations (calc, opSet) {
         elem.addEventListener('click', e => {
             opSet[elem.id](calcBuffers);
             displayResult();
+        });
+    });
+}
+
+const Functions = {
+    'display-clear' : (buffers, display) => {
+        buffers.input = '0';
+        display.textContent = buffers.input;
+    },
+    'switch-signs' : (buffers, display) => {
+        let text = buffers.input;
+        if (text.charAt(0) == '-') {
+            buffers.input = text.slice(1);
+        } else {
+            buffers.input = '-' + text
+        }
+        display.textContent = buffers.input;
+    },
+    'backspace' : (buffers, display) => {
+        display.textContent = buffers.input;
+    }
+}
+
+function bindFunctions (calc, opSet) {
+    const functions = calc.querySelectorAll('.function');
+    functions.forEach( elem => {
+        elem.addEventListener('click', e => {
+            opSet[elem.id](calcBuffers, calcDisplay);
         });
     });
 }
