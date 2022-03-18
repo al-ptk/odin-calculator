@@ -75,6 +75,7 @@ function setUpCalc () {
     bindButtonsToGridArea(calc);
     bindOperations(calc, Operations);
     bindFunctions(calc, Functions);
+    bindNumbers(calc);
     applyStyles(calc, stylesheet1);
     return calc;
 }
@@ -101,9 +102,21 @@ function cycleStyles (stylesheets) {
     applyStyles(calc, stylesheets[+styleToggle]);
 }
 
-/* APP LOGIC */
+/* ---------------------- APP LOGIC ----------------------------- */
+function pushInputToOutput (){
+    CalculatorBuffers.output = CalculatorBuffers.input;
+}
+
+function pushOutputToInput() {
+    CalculatorBuffers.input = CalculatorBuffers.output;
+}
+
+function clearInput () {
+    CalculatorBuffers.input = '0';
+}
+
 function displayResult () {
-    calcDisplay.textContent = calcBuffers.output;
+    CalculatorDisplay.textContent = CalculatorBuffers.output;
 }
 
 const Operations = {
@@ -132,12 +145,27 @@ const Operations = {
     }
 }
 
+function setCurretOperation(op){
+    CalculatorBuffers.currentOp = op;
+}
+
 function bindOperations (calc, opSet) {
     const operators = calc.querySelectorAll('.operator');
     operators.forEach( elem => {
         elem.addEventListener('click', e => {
-            opSet[elem.id](calcBuffers);
-            displayResult();
+            if (CalculatorBuffers.currentOp == '') {
+                setCurretOperation(elem.id)
+                pushInputToOutput();
+                clearInput();
+            } else if (){
+            
+            }else {
+                    opSet[CalculatorBuffers.currentOp](CalculatorBuffers);
+                    pushOutputToInput();
+                    setCurretOperation(elem.id)
+                    clearInput();
+            }
+            p(CalculatorBuffers);
         });
     });
 }
@@ -146,6 +174,7 @@ const Functions = {
     'display-clear' : (buffers, display) => {
         buffers.input = '0';
         display.textContent = buffers.input;
+        CalculatorBuffers.currentOp = '';
     },
     'switch-signs' : (buffers, display) => {
         let text = buffers.input;
@@ -157,7 +186,7 @@ const Functions = {
         display.textContent = buffers.input;
     },
     'backspace' : (buffers, display) => {
-        display.textContent = buffers.input;
+        display.textContent = buffers.input.slice(0, buffers.input.length - 1);
     }
 }
 
@@ -165,19 +194,40 @@ function bindFunctions (calc, opSet) {
     const functions = calc.querySelectorAll('.function');
     functions.forEach( elem => {
         elem.addEventListener('click', e => {
-            opSet[elem.id](calcBuffers, calcDisplay);
+            opSet[elem.id](CalculatorBuffers, CalculatorDisplay);
         });
     });
 }
 
+
+function takeNumber(num) {
+    if (CalculatorBuffers.input == '0') {
+        CalculatorBuffers.input = '';
+    }
+    CalculatorBuffers.input +=  num;
+    CalculatorDisplay.textContent = CalculatorBuffers.input;
+}
+
+function bindNumbers (calc) {
+    const nums = calc.querySelectorAll('.number');
+    nums.forEach(elem => {
+        elem.addEventListener('click', e => {
+            takeNumber(elem.textContent);
+            p(CalculatorBuffers)
+        })
+    });
+}
+
+
 /* Main */
-const calcBuffers = {
-    output : '2',
-    input : '2'
+const CalculatorBuffers = {
+    output : '0',
+    input : '0',
+    currentOp : ''
 }
 var styleToggle = false;
 const body = document.querySelector('body');
 const toggleStyleBtn = createToggleStyleButton(body);
-const calc = setUpCalc();
-const calcDisplay = document.querySelector('.display');
-calcDisplay.textContent = calcBuffers.output;
+const Calculator = setUpCalc();
+const CalculatorDisplay = document.querySelector('.display');
+CalculatorDisplay.textContent = CalculatorBuffers.input;
