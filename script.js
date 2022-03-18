@@ -164,11 +164,16 @@ function bindOperations (calc, opSet) {
                     displayResult()
                     clearInput();
                 } else {
-                    opSet[CalculatorBuffers.currentOp](CalculatorBuffers);
-                    setCurretOperation(elem.id)
-                    displayResult()
+                    if (CalculatorBuffers.currentOp == elem.id) {
+                        opSet[CalculatorBuffers.currentOp](CalculatorBuffers);
+                        displayResult()
+                    } else {
+                        setCurretOperation(elem.id)
+                        clearInput();
+                    }
                 }
             }
+            p(CalculatorBuffers);
         });
     });
 }
@@ -218,6 +223,7 @@ function bindNumbers (calc) {
     nums.forEach(elem => {
         elem.addEventListener('click', e => {
             takeNumber(elem.textContent);
+            p(CalculatorBuffers);
         })
     });
 }
