@@ -106,12 +106,27 @@ function displayResult () {
 }
 
 const Operations = {
-    'equal' : (display, buffers) => displayResult(),
-    'add' : (buffers) => buffers.output += buffers.input,
-    'subtract' : (buffers) => buffers.output -= buffers.input,
-    'multiply' : (buffers) => buffers.output *= buffers.input,
-    'divide' : (buffers) => buffers.output /= buffers.input,
-    'decimal' : (buffers) => buffers.output += 0.0    
+    'equal' : (buffers) => {displayResult()},
+    'add' : (buffers) => {
+        buffers.output = +buffers.output + +buffers.input
+        buffers.output = buffers.output.toString();
+    },
+    'subtract' : (buffers) => {
+        buffers.output -= buffers.input;
+        buffers.output = buffers.output.toString();
+    },
+    'multiply' : (buffers) => {
+        buffers.output *= buffers.input;
+        buffers.output = buffers.output.toString();
+    },
+    'divide' : (buffers) => {
+        buffers.output = buffers.output / buffers.input
+        buffers.output = buffers.output.toString();
+    },
+    'decimal' : (buffers) => {
+        if (buffers.output.includes('.')) return ;
+        buffers.output += '.';
+    }
 }
 
 function bindOperations (calc, opSet) {
@@ -126,8 +141,8 @@ function bindOperations (calc, opSet) {
 
 /* Main */
 const calcBuffers = {
-    output : 100,
-    input : 50
+    output : '2',
+    input : '2'
 }
 var styleToggle = false;
 const body = document.querySelector('body');
