@@ -1,12 +1,7 @@
 'use strict';
 const p = (str) => console.log(str);
 
-function bindButtonsToArea (calc) {
-    const btns = calc.children;
-    for (const btn of btns) {
-        btn.style.gridArea = btn.id;
-    }
-}
+/* LAYOUT CONFIGURATION */
 
 const stylesheet1 = {
     'display' : {
@@ -58,6 +53,13 @@ const stylesheet2 = {
     }
 }
 
+function bindButtonsToGridArea (calc) {
+    const btns = calc.children;
+    for (const btn of btns) {
+        btn.style.gridArea = btn.id;
+    }
+}
+
 function applyStyles(parent, stylesheet) {
     const pickStyleBy = (className) => stylesheet[className];
     for (const elem of parent.children){
@@ -66,6 +68,13 @@ function applyStyles(parent, stylesheet) {
             elem.style.setProperty(styleProperty, elemProperties[styleProperty]);
         }
     }
+}
+
+function setUpCalc () {
+    const calc = document.querySelector('.calculator');
+    bindButtonsToGridArea(calc); 
+    applyStyles(calc, stylesheet1);
+    return calc;
 }
 
 function createToggleStyleButton (parent) {
@@ -90,14 +99,12 @@ function cycleStyles (stylesheets) {
     applyStyles(calc, stylesheets[+styleToggle]);
 }
 
-function setUpCalc () {
-    const calc = document.querySelector('.calculator');
-    bindButtonsToArea(calc); 
-    applyStyles(calc, stylesheet1);
-    return calc;
-}
-
 var styleToggle = false;
 const body = document.querySelector('body');
 const toggleStyleBtn = createToggleStyleButton(body);
 const calc = setUpCalc();
+
+
+/* APP LOGIC */
+
+

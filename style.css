@@ -34,7 +34,7 @@ body {
     "seven          eight           nine        multiply"
     "four           five            six         subtract"
     "one            two             three       add"
-    "zero           zero            decimal     equal";
+    "decimal        zero            equal     equal";
 }
 
 button {
@@ -56,4 +56,5 @@ button {
     /* This gets changed by the script */
     background: white;
     color: #2f2f2f;
+    border: .1rem solid;
 }
