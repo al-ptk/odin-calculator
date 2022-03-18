@@ -72,7 +72,8 @@ function applyStyles(parent, stylesheet) {
 
 function setUpCalc () {
     const calc = document.querySelector('.calculator');
-    bindButtonsToGridArea(calc); 
+    bindButtonsToGridArea(calc);
+    bindOperations(calc, Operations)
     applyStyles(calc, stylesheet1);
     return calc;
 }
@@ -113,7 +114,15 @@ const Operations = {
     'decimal' : (buffers) => buffers.output += 0.0    
 }
 
-
+function bindOperations (calc, opSet) {
+    const operators = calc.querySelectorAll('.operator');
+    operators.forEach( elem => {
+        elem.addEventListener('click', e => {
+            opSet[elem.id](calcBuffers);
+            displayResult();
+        });
+    });
+}
 
 /* Main */
 const calcBuffers = {
