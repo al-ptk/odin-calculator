@@ -53,6 +53,36 @@ const stylesheet2 = {
     }
 }
 
+const stylesheet3 = {
+    'display' : {
+        'background':       'black',
+        'color':            'rgb(0, 186, 248)',
+        'border':           '.2rem solid white',
+    },
+    'number' : {
+        'background':       'black',
+        'border':           '.2rem solid white',
+        'border-radius':    '.5rem',
+        'color':            'white'
+    },
+    'operator' : {
+        'background':       'black',
+        'border':           '.2rem solid white',
+        'border-radius':    '.5rem',
+        'color':            'white'
+    },
+    'function' : {
+        'background':       'black',
+        'border':           '.2rem solid white',
+        'border-radius':    '.5rem',
+        'color':            'white'
+    }/*, 
+    'calculator': {
+        'background :       'black',
+        'border:            '.2rem solid white',
+    }*/
+}
+
 function bindButtonsToGridArea (calc) {
     const btns = calc.children;
     for (const btn of btns) {
@@ -76,7 +106,7 @@ function setUpCalc () {
     bindOperations(calc, Operations);
     bindFunctions(calc, Functions);
     bindNumbers(calc);
-    applyStyles(calc, stylesheet1);
+    applyStyles(calc, stylesheet3);
     return calc;
 }
 
